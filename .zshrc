@@ -3,13 +3,6 @@
 # Do not want background jobs to be at a lower priority
 unsetopt BG_NICE
 
-# WSL specific things
-if grep --quiet microsoft /proc/version 2>/dev/null; then
-  # Set Windows display for WSL
-  export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}')':0.0'
-  export LIBGL_ALWAYS_INDIRECT=1
-fi
-
 # Custom aliases
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
@@ -20,9 +13,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Secret env
 [ -f ~/.env ] && source ~/.env
 
-# Original PATH from genie - Temporary fix, see https://github.com/arkane-systems/genie/issues/201
-[ -f /run/genie.path ] && export PATH=$PATH:$(cat /run/genie.path)
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
@@ -31,10 +21,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
-
-# screen
-export SCREENDIR=$HOME/.screen
+export EDITOR="code -w"
 
 # Go
 export PATH=$PATH:/usr/local/go/bin
